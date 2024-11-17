@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkm8dHbzKmq7mZV-dfSpBYFnAQZEhsit8"
+      defer
+    ></script>
+
+    <title>Estação meterológica</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="weather">
+        <h1 id="title">Santa Cruz do Sul</h1>
+
+        <div id="infos">
+          <div id="temp">
+            <img
+              id="temp_img"
+              src="http://openweathermap.org/img/wn/04d@2x.png"
+              alt=""
+            />
+
+            <div>
+              <p id="temp_value">32 <sup>C°</sup></p>
+            </div>
+          </div>
+
+          <div id="other_infos">
+            <div class="info">
+              <i id="temp_max_icon" class="fa-solid fa-temperature-high"></i>
+
+              <div>
+                <h2>Temp. max</h2>
+
+                <p id="temp_max">32 <sup>C°</sup></p>
+              </div>
+            </div>
+
+            <div class="info">
+              <i id="temp_min_icon" class="fa-solid fa-temperature-low"></i>
+
+              <div>
+                <h2>Temp. min</h2>
+
+                <p id="temp_min">12 <sup>C°</sup></p>
+              </div>
+            </div>
+
+            <div class="info">
+              <i class="fa-solid fa-mountain"></i>
+
+              <div>
+                <h2>Pressão Atm.</h2>
+
+                <p id="humidity">1 atm</p>
+              </div>
+            </div>
+            <div class="info">
+              <i id="lumi_icon" class="fa-regular fa-lightbulb"></i>
+
+              <div>
+                <h2>Luminosidade</h2>
+
+                <p id="lumi">70%</p>
+              </div>
+            </div>
+            <div class="info">
+              <i id="rain-icon" class="fa-solid fa-cloud-rain"></i>
+
+              <div>
+                <h2>Chovendo</h2>
+
+                <p id="raining">Sim</p>
+              </div>
+            </div>
+            <div class="info">
+              <i class="fa-regular fa-clock"></i>
+
+              <div>
+                <h2>Data</h2>
+
+                <p id="data">5 pra daqui a pouco</p>
+              </div>
+            </div>
+          </div>
+          <div id="map"></div>
+        </div>
+        <div id="switch" onclick="toggleMode()">
+          <button></button>
+          <span></span>
+        </div>
+      </div>
+      <script src="script.js"></script>
+    </div>
+  </body>
+</html>
