@@ -6,7 +6,47 @@
   padding: 0;
   box-sizing: border-box;
 }
+.dark {
+  --text-color: #f0f0f0;
+  --bg-color: linear-gradient(
+    180deg,
+    rgba(30, 30, 30, 0.8) 0%,
+    rgba(40, 40, 40, 0.8) 100%
+  );
+  --stroke-color: rgba(255, 255, 255, 0.5);
+  --surface-color: rgba(255, 255, 255, 0.05);
+  --surface-color-hover: rgba(0, 0, 0, 0.02);
+  --highlight-color: rgba(255, 255, 255, 0.2);
+  --switch-bg-url: url(./assets/MoonStars.svg);
+  --container-bg: #2e2e2e;
+  --container-bx: 0px 0px 5px rgba(0, 0, 0, 0.6);
+  --weather-tl: #e0e0e0;
+  --temp-bg: linear-gradient(90deg, #3a5a6f, #4e6f7f);
+  --other-info-bx: 0px 0px 5px rgba(0, 0, 0, 0.4);
+  --other-info-bg: #3a3a3a;
+  --map-bx: 0px 0px 5px rgba(0, 0, 0, 0.6); /* Sombra mais forte */
+}
 
+:root {
+  --text-color: black;
+  --bg-color: linear-gradient(
+    180deg,
+    rgba(74, 144, 226, 0.533333) 0%,
+    rgba(0, 86, 130, 0.533333) 100%
+  );
+  --stroke-color: rgba(0, 0, 0, 0.5);
+  --surface-color: rgba(0, 0, 0, 0.05);
+  --surface-color-hover: rgba(0, 0, 0, 0.02);
+  --highlight-color: rgba(0, 0, 0, 0.1);
+  --switch-bg-url: url(./assets/Sun.svg);
+  --container-bg: #f0f8ff;
+  --container-bx: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  --weather-tl: #372f3f;
+  --temp-bg: linear-gradient(90deg, #5a7cdc, #606dde);
+  --other-info-bx: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  --other-info-bg: #fff;
+  --map-bx: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+}
 body {
   display: flex;
   align-items: center;
@@ -175,52 +215,15 @@ body {
   }
 }
 
-.dark {
-  --text-color: #f0f0f0;
-  --bg-color: linear-gradient(
-    180deg,
-    rgba(30, 30, 30, 0.8) 0%,
-    rgba(40, 40, 40, 0.8) 100%
-  );
-  --stroke-color: rgba(255, 255, 255, 0.5);
-  --surface-color: rgba(255, 255, 255, 0.05);
-  --surface-color-hover: rgba(0, 0, 0, 0.02);
-  --highlight-color: rgba(255, 255, 255, 0.2);
-  --switch-bg-url: url(./assets/MoonStars.svg);
-  --container-bg: #2e2e2e;
-  --container-bx: 0px 0px 5px rgba(0, 0, 0, 0.6);
-  --weather-tl: #e0e0e0;
-  --temp-bg: linear-gradient(90deg, #3a5a6f, #4e6f7f);
-  --other-info-bx: 0px 0px 5px rgba(0, 0, 0, 0.4);
-  --other-info-bg: #3a3a3a;
-  --map-bx: 0px 0px 5px rgba(0, 0, 0, 0.6); /* Sombra mais forte */
-}
-
-:root {
-  --text-color: black;
-  --bg-color: linear-gradient(
-    180deg,
-    rgba(74, 144, 226, 0.533333) 0%,
-    rgba(0, 86, 130, 0.533333) 100%
-  );
-  --stroke-color: rgba(0, 0, 0, 0.5);
-  --surface-color: rgba(0, 0, 0, 0.05);
-  --surface-color-hover: rgba(0, 0, 0, 0.02);
-  --highlight-color: rgba(0, 0, 0, 0.1);
-  --switch-bg-url: url(./assets/Sun.svg);
-  --container-bg: #f0f8ff;
-  --container-bx: 5px 5px 5px rgba(0, 0, 0, 0.1);
-  --weather-tl: #372f3f;
-  --temp-bg: linear-gradient(90deg, #5a7cdc, #606dde);
-  --other-info-bx: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  --other-info-bg: #fff;
-  --map-bx: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
-}
-
 #battery-setor {
   display: flex;
   text-align: center;
   align-items: center;
   gap: 2px;
   justify-content: end;
+}
+#att {
+  margin-top: 8px;
+  font-size: 10px;
+  display: flex;
 }

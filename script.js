@@ -1,5 +1,6 @@
 let tempMax = null
 let tempMin = null
+
 let dataAtual = new Date()
 
 function compararTemperatura(temperatura) {
@@ -24,8 +25,8 @@ function verificarNovoDia() {
 }
 
 function initMap() {
-  const lat = -30.040267143389407
-  const lng = -51.09482406662799
+  const lat = -29.697573771794765
+  const lng = -52.43576033878338
 
   const mapOptions = {
     //pega o local baseado na latitude e longitude
@@ -82,7 +83,10 @@ function updateWeatherIcon() {
     tempImg.src = "http://openweathermap.org/img/wn/09d@2x.png" // Ícone de dia
     tempImg.alt = "Clima durante o dia"
   } else {
-    if (currentHour >= 6 && currentHour < 18) {
+    if (
+      currentHour >= /*times.sunrise*/ 6 &&
+      currentHour < /*times.sunset*/ 18
+    ) {
       // Durante o dia
       tempImg.src = "http://openweathermap.org/img/wn/01d@2x.png" // Ícone de dia
       tempImg.alt = "Clima durante o dia"
@@ -154,26 +158,31 @@ updateDateTime()
 // Chama o mapa ao carregar a página
 window.onload = initMap
 
-const socket = new WebSocket("ws://<IP_DO_RASPI>:8765")
+const socket = new WebSocket("ws://window.location.hostname")
 
 // Função para atualizar os elementos HTML
 function updateSensorData(data) {
-  document.getElementById("temperature").textContent =
-    data.temperature.toFixed(2)
+  document.getElementById("temp_value").textContent = data.temp.toFixed(2)
 
-  compararTemperatura(data.temperature)
+  compararTemperatura(data.temp)
 
-  document.getElementById("pressure").textContent = data.pressure.toFixed(2)
-  document.getElementById("altitude").textContent = data.altitude.toFixed(2)
-  document.getElementById("battery").textContent = data.battery.toFixed(2)
-  document.getElementById("lumi").textContent = data.lumi.toFixed(2)
-  document.getElementById("raining").textContent = data.raining.toFixed(2)
+  document.getElementById("pressure").textContent = data.press.toFixed(2)
 
-  let raining = data.raining.toFixed(2)
+  let tensao = data.tensao.toFixed(2)
+  porcentagem = map(tensao, 3.0, 5.0, 0, 100)
+  document.getElementById("battery").textContent = porcentagem
 
-  document.getElementById("latitude").textContent = data.latitude || "N/D"
-  document.getElementById("longitude").textContent = data.longitude || "N/D"
-  initMap(data.latitude, data.longitude)
+  document.getElementById("lumi").textContent = data.lum.toFixed(2)
+
+  document.getElementById("raining").textContent = data.chuva.toFixed(2)
+  let raining = data.chuva.toFixed(2)
+
+  document.getElementById("latitude").textContent = data.lat || "N/D"
+  let lat = data.lat
+  let lon = data.lon
+  document.getElementById("longitude").textContent = data.lon || "N/D"
+  ocument.getElementById("last-att").textContent = formatDate() || "N/D"
+  initMap()
 }
 
 // Evento quando a conexão é aberta
