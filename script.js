@@ -1,9 +1,12 @@
 let tempMax = null
 let tempMin = null
-
+let raining = 0
+let lat = -29.697573771794765
+let lng = -52.43576033878338
 let dataAtual = new Date()
 
 function compararTemperatura(temperatura) {
+  verificarNovoDia()
   if (tempMax === null || temperatura > tempMax) {
     tempMax = temperatura
     document.getElementById("temp_max").textContent = temperatura
@@ -25,9 +28,6 @@ function verificarNovoDia() {
 }
 
 function initMap() {
-  const lat = -29.697573771794765
-  const lng = -52.43576033878338
-
   const mapOptions = {
     //pega o local baseado na latitude e longitude
     center: { lat, lng },
@@ -80,8 +80,8 @@ function updateWeatherIcon() {
 
   // Define o ícone com base na hora
   if (raining > 0) {
-    tempImg.src = "http://openweathermap.org/img/wn/09d@2x.png" // Ícone de dia
-    tempImg.alt = "Clima durante o dia"
+    tempImg.src = "http://openweathermap.org/img/wn/09d@2x.png" // Ícone de chuva
+    tempImg.alt = "Chovendo"
   } else {
     if (
       currentHour >= /*times.sunrise*/ 6 &&
@@ -152,8 +152,8 @@ function toggleMode() {
   body.classList.toggle("dark")
 }
 
-setInterval(updateDateTime, 10000)
-updateDateTime()
+setInterval(updateDateTime, 10000) //loop de 10s para mudar o tempo e a bateria
+updateDateTime() //chamar uma vez para adicionar a img
 
 // Chama o mapa ao carregar a página
 window.onload = initMap
@@ -175,14 +175,11 @@ function updateSensorData(data) {
   document.getElementById("lumi").textContent = data.lum.toFixed(2)
 
   document.getElementById("raining").textContent = data.chuva.toFixed(2)
-  let raining = data.chuva.toFixed(2)
-
-  document.getElementById("latitude").textContent = data.lat || "N/D"
-  let lat = data.lat
-  let lon = data.lon
-  document.getElementById("longitude").textContent = data.lon || "N/D"
-  ocument.getElementById("last-att").textContent = formatDate() || "N/D"
-  initMap()
+  raining = data.chuva.toFixed(2)
+  lat = data.lat || "N/D"
+  lng = data.lon || "N/D"
+  document.getElementById("last-att").textContent = data.hora
+  initMap(lat, lng)
 }
 
 // Evento quando a conexão é aberta
