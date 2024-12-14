@@ -5,16 +5,20 @@ let lat = -29.697573771794765
 let lng = -52.43576033878338
 let dataAtual = new Date()
 
+function map(value, inMin, inMax, outMin, outMax) {
+  return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
+}
+
 function compararTemperatura(temperatura) {
   verificarNovoDia()
   if (tempMax === null || temperatura > tempMax) {
     tempMax = temperatura
-    document.getElementById("temp_max").textContent = temperatura
+    document.getElementById("temp_max").textContent = temperatura.toFixed(2)
   }
 
   if (tempMin === null || temperatura < tempMin) {
     tempMin = temperatura
-    document.getElementById("temp_min").textContent = temperatura
+    document.getElementById("temp_min").textContent = temperatura.toFixed(2)
   }
 }
 
@@ -158,51 +162,48 @@ updateDateTime() //chamar uma vez para adicionar a img
 // Chama o mapa ao carregar a página
 window.onload = initMap
 
-const socket = new WebSocket("ws://window.location.hostname")
-
 // Função para atualizar os elementos HTML
 function updateSensorData(data) {
-  document.getElementById("temp_value").textContent = data.temp.toFixed(2)
+  document.getElementById("temp_value").textContent = `${data.temp.toFixed(
+    2
+  )} °C`
 
   compararTemperatura(data.temp)
 
-  document.getElementById("pressure").textContent = data.press.toFixed(2)
+  document.getElementById("pressure").textContent = `${data.press.toFixed(
+    2
+  )} atm`
 
   let tensao = data.tensao.toFixed(2)
   porcentagem = map(tensao, 3.0, 5.0, 0, 100)
-  document.getElementById("battery").textContent = porcentagem
+  document.getElementById("battery").textContent = porcentagem.toFixed(2)
 
-  document.getElementById("lumi").textContent = data.lum.toFixed(2)
+  document.getElementById("lumi").textContent = `${data.lum.toFixed(2)} %`
 
-  document.getElementById("raining").textContent = data.chuva.toFixed(2)
-  raining = data.chuva.toFixed(2)
-  lat = data.lat || "N/D"
-  lng = data.lon || "N/D"
+  document.getElementById("raining").textContent = `${data.chuva.toFixed(2)} mm`
   document.getElementById("last-att").textContent = data.hora
-  initMap(lat, lng)
+  raining = data.chuva.toFixed(2)
+  lat = data.lat || lat
+  lng = data.lon || lng
+
+  initMap()
 }
 
-// Evento quando a conexão é aberta
-socket.addEventListener("open", () => {
-  console.log("Conectado ao WebSocket!")
-})
+const ws = new WebSocket(`ws://${window.location.hostname}/ws`)
 
 // Evento para receber mensagens do servidor
-socket.addEventListener("message", (event) => {
+ws.addEventListener("open", () =>
+  console.log("Conexão WebSocket estabelecida!")
+)
+ws.addEventListener("message", (event) => {
   try {
-    const sensorData = JSON.parse(event.data.replace(/'/g, '"')) // Substitui aspas simples por duplas
-    updateSensorData(sensorData)
+    const data = JSON.parse(event.data.replace(/'/g, '"'))
+    updateSensorData(data)
   } catch (error) {
-    console.error("Erro ao processar os dados recebidos:", error)
+    console.error("Erro ao processar dados do WebSocket:", error)
   }
 })
-
-// Evento de erro
-socket.addEventListener("error", (error) => {
+ws.addEventListener("close", () => console.log("Conexão WebSocket encerrada."))
+ws.addEventListener("error", (error) =>
   console.error("Erro no WebSocket:", error)
-})
-
-// Evento quando a conexão é encerrada
-socket.addEventListener("close", () => {
-  console.log("Conexão com WebSocket encerrada.")
-})
+)
